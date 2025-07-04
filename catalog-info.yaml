@@ -1,0 +1,22 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: dep-backstage
+  description: Internal Developer Portal
+  # Example for optional annotations
+  # annotations:
+  #   github.com/project-slug: backstage/backstage
+  #   backstage.io/techdocs-ref: dir:.
+spec:
+  type: website
+  owner: altimetrik-digital-enablement-demo-hub
+  lifecycle: production
+---
+# This points to external template definitions
+apiVersion: backstage.io/v1alpha1
+kind: Location
+metadata:
+  name: platform-templates
+spec:
+  type: url
+  target: https://raw.githubusercontent.com/altimetrik-digital-enablement-demo-hub/platform-backstage-templates/refs/heads/main/catalog-info.yaml

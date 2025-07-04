@@ -1,0 +1,86 @@
+app:
+  title: DEP Internal Developer Portal
+  baseUrl: ${DEP_IDP_BASE_URL}
+
+organization:
+  name: ${DEP_ORG}
+
+backend:
+  baseUrl: ${DEP_IDP_BASE_URL}
+  listen: ':7007'
+  csp:
+    connect-src: ["'self'", 'http:', 'https:']
+  cors:
+    origin: ${DEP_IDP_BASE_URL}
+    methods: [GET, HEAD, PATCH, POST, PUT, DELETE]
+    credentials: true
+  database:
+    client: pg
+    connection:
+      host: ${BACKSTAGEDB_HOST}
+      port: ${BACKSTAGEDB_PORT}
+      user: ${POSTGRES_USER}
+      password: ${POSTGRES_PASSWORD}
+
+auth:
+  environment: production
+  providers:
+    microsoft:
+        production:
+          clientId: ${AZURE_CLIENT_ID}
+          clientSecret: ${AZURE_CLIENT_SECRET}
+          tenantId: ${AZURE_TENANT_ID}
+          domainHint: ${AZURE_TENANT_ID}
+          signIn:
+            resolvers:
+              - resolver: emailMatchingUserEntityProfileEmail
+              - resolver: emailLocalPartMatchingUserEntityName
+              - resolver: emailMatchingUserEntityAnnotation
+
+catalog:
+  orphanStrategy: delete
+
+  # Automatic refresh configuration
+  refresh:
+    schedule:
+      frequency: PT30M # Check every 30 minutes
+      timeout: PT10M
+
+  providers:
+    # Microsoft Graph for users and groups
+    microsoftGraphOrg:
+      altimetrik:
+        target: https://graph.microsoft.com/v1.0
+        authority: https://login.microsoftonline.com
+        tenantId: ${AZURE_TENANT_ID}
+        clientId: ${AZURE_CLIENT_ID}
+        clientSecret: ${AZURE_CLIENT_SECRET}
+        queryMode: basic
+        user:
+          expand: manager
+          filter: accountEnabled eq true and userType eq 'member'
+          loadPhotos: true
+          select: ['id', 'displayName', 'mail', 'userPrincipalName', 'manager']
+        schedule:
+          frequency: PT1H
+          timeout: PT50M
+          initialDelay: { seconds: 15}
+
+    # GitHub organization discovery - this will automatically scan repositories for entities
+    github:
+      altimetrik:
+        organization: altimetrik-digital-enablement-demo-hub
+        schedule:
+          frequency: PT5M # Scan every 5 minutes
+          timeout: PT10M
+        filters:
+          # Scan all repositories
+          repository: '.*'
+          branch: 'main'
+        catalogPath: '/catalog-info.yaml'
+  
+  # Static file locations
+  locations:
+    # Core catalog file
+    - type: file
+      target: ./catalog-info.yaml
