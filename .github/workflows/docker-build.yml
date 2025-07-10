@@ -87,7 +87,7 @@ jobs:
           app-id: ${{ secrets.GITOPS_APP_ID }}
           private-key: ${{ secrets.GITOPS_PRIVATE_KEY }}
           owner: altimetrik-digital-enablement-demo-hub
-          repositories: gitops
+          repositories: org-gitops
 
       - name: Debug - Check token and repository access
         run: |
