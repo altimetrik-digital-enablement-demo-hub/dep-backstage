@@ -64,7 +64,7 @@ const VersionDisplay = () => {
   
   return (
     <div style={{ textAlign: 'left', padding: '8px 0 8px 32px', fontSize: '0.85em', color: '#888' }}>
-      v{version}
+      Ver. {version}
     </div>
   );
 };
