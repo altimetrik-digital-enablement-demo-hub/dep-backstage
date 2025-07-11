@@ -123,6 +123,7 @@ jobs:
       - name: Commit and push changes
         env: 
           IMAGE_TAG: ${{ steps.imagevars.outputs.branch }}-${{ steps.imagevars.outputs.date }}.${{ github.run_number }}
+          REPOSITORY: ${{ steps.imagevars.outputs.repository_name }}
         run: |
           cd gitops
           git config user.name "github-actions[bot]"
