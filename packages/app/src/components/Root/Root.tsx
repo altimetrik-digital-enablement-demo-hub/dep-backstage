@@ -27,6 +27,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import { MyGroupsSidebarItem } from '@backstage/plugin-org';
 import GroupIcon from '@material-ui/icons/People';
+import { configApiRef, useApi } from '@backstage/core-plugin-api';
 
 const useSidebarLogoStyles = makeStyles({
   root: {
@@ -52,6 +53,18 @@ const SidebarLogo = () => {
       <Link to="/" underline="none" className={classes.link} aria-label="Home">
         {isOpen ? <LogoFull /> : <LogoIcon />}
       </Link>
+    </div>
+  );
+};
+
+const VersionDisplay = () => {
+  const config = useApi(configApiRef);
+  config.getConfig('app')
+  const version = config.getOptionalString('app.version') || '0.0.0-dev';
+  
+  return (
+    <div style={{ textAlign: 'left', padding: '8px 0 8px 32px', fontSize: '0.85em', color: '#888' }}>
+      v{version}
     </div>
   );
 };
@@ -90,6 +103,8 @@ export const Root = ({ children }: PropsWithChildren<{}>) => (
       >
         <SidebarSettings />
       </SidebarGroup>
+      <SidebarDivider />
+      <VersionDisplay />      
     </Sidebar>
     {children}
   </SidebarPage>

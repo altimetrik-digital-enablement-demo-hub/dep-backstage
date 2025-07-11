@@ -32,9 +32,6 @@ jobs:
       - name: Generate type definitions
         run: yarn tsc
 
-      - name: Build backend
-        run: yarn build:backend
-
       - name: Set image date
         id: image_date
         run: echo "date=$(date +'%Y%m%d')" >> $GITHUB_OUTPUT
@@ -51,6 +48,15 @@ jobs:
           echo "branch=$SAFE_BRANCH" >> $GITHUB_OUTPUT
           echo "date=$DATE" >> $GITHUB_OUTPUT
           echo "repository_name=${GITHUB_REPOSITORY##*/}" >> $GITHUB_OUTPUT
+
+      - name: Build frontend
+        run: yarn build
+        working-directory: packages/app
+        env:
+          APP_VERSION: ${{ steps.imagevars.outputs.branch }}-${{ steps.imagevars.outputs.date }}.${{ github.run_number }}
+
+      - name: Build backend
+        run: yarn build:backend
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4 

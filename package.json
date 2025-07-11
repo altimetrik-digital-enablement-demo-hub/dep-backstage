@@ -5,6 +5,10 @@
   "engines": {
     "node": "20 || 22"
   },
+  "configSchema": "config.d.ts",
+  "files": [
+    "config.d.ts"
+  ],
   "scripts": {
     "start": "backstage-cli repo start",
     "build:backend": "yarn workspace backend build",

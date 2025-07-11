@@ -1,7 +1,9 @@
 app:
+  $visbility: frontend
   title: DEP Internal Developer Portal
   baseUrl: http://localhost:3000
-
+  version: ${APP_VERSION:-0.0.0-dev}
+      
 organization:
   name: Altimetrik
 
