@@ -3,10 +3,11 @@ kind: Component
 metadata:
   name: dep-backstage
   description: Internal Developer Portal
-  # Example for optional annotations
-  # annotations:
-  #   github.com/project-slug: backstage/backstage
-  #   backstage.io/techdocs-ref: dir:.
+  tags:
+    - platform
+  annotations:
+    github.com/project-slug: altimetrik-digital-enablement-demo-hub/dep-backstage
+    backstage.io/techdocs-ref: url:https://github.com/altimetrik-digital-enablement-demo-hub/dep-backstage/tree/main
 spec:
   type: website
   owner: altimetrik-digital-enablement-demo-hub
