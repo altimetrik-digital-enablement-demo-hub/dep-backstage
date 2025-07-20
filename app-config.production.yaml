@@ -1,6 +1,8 @@
 app:
+  $visbility: frontend
   title: DEP Internal Developer Portal
   baseUrl: ${DEP_IDP_BASE_URL}
+  version: ${APP_VERSION:-0.0.0-dev}
 
 organization:
   name: ${DEP_ORG}
@@ -21,7 +23,29 @@ backend:
       port: ${BACKSTAGEDB_PORT}
       user: ${POSTGRES_USER}
       password: ${POSTGRES_PASSWORD}
+  reading:
+    allow:
+      - host: raw.githubusercontent.com
+      - host: github.com
 
+integrations:
+  github:
+    - host: github.com
+      apps:
+        - appId: ${GITHUB_APP_ID}
+          clientId: ${GITHUB_APP_CLIENT_ID}
+          clientSecret: ${GITHUB_APP_CLIENT_SECRET}
+          privateKey: ${GITHUB_APP_PRIVATE_KEY}
+
+proxy:
+
+techdocs:
+  builder: 'local' # Alternatives - 'external'
+  generator:
+    runIn: 'local' # Alternatives - 'local'
+  publisher:
+    type: 'local' # Alternatives - 'googleGcs' or 'awsS3'. Read documentation for using alternatives.
+  
 auth:
   environment: production
   providers:
@@ -37,8 +61,16 @@ auth:
               - resolver: emailLocalPartMatchingUserEntityName
               - resolver: emailMatchingUserEntityAnnotation
 
+scaffolder:
+
 catalog:
   orphanStrategy: delete
+
+  import:
+    entityFilename: catalog-info.yaml
+    pullRequestBranchName: backstage-integration
+  rules:
+    - allow: [Component, System, API, Resource, Location, Template]
 
   # Automatic refresh configuration
   refresh:
@@ -84,3 +116,10 @@ catalog:
     # Core catalog file
     - type: file
       target: ./catalog-info.yaml
+  
+  useUrlReadersSearch: true
+
+kubernetes:
+
+permission:
+  enabled: true

@@ -42,16 +42,6 @@ integrations:
   github:
     - host: github.com
       token: ${GITHUB_TOKEN}
-      apps:
-        - appId: ${GITHUB_APP_ID}
-          clientId: ${GITHUB_APP_CLIENT_ID}
-          clientSecret: ${GITHUB_APP_CLIENT_SECRET}
-          privateKey: ${GITHUB_APP_PRIVATE_KEY}
-
-    ### Example for how to add your GitHub Enterprise instance using the API:
-    # - host: ghe.example.net
-    #   apiBaseUrl: https://ghe.example.net/api/v3
-    #   token: ${GHE_TOKEN}
 
 proxy:
   ### Example for how to add a proxy endpoint for the frontend.
