@@ -60,6 +60,10 @@ auth:
               - resolver: emailMatchingUserEntityProfileEmail
               - resolver: emailLocalPartMatchingUserEntityName
               - resolver: emailMatchingUserEntityAnnotation
+    github:
+      production:
+        clientId: ${GITHUB_OAUTH_CLIENT_ID}
+        clientSecret: ${GITHUB_OAUTH_CLIENT_SECRET}       
 
 scaffolder:
 
