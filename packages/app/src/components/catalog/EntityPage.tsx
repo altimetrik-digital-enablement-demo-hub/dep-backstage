@@ -63,6 +63,13 @@ import {
   isGithubActionsAvailable,
 } from '@backstage-community/plugin-github-actions';
 
+import { 
+  EntityGithubPullRequestsContent, 
+  isGithubPullRequestsAvailable 
+} from '@roadiehq/backstage-plugin-github-pull-requests';
+
+import { EntityGithubPullRequestsOverviewCard } from '@roadiehq/backstage-plugin-github-pull-requests';
+
 const techdocsContent = (
   <EntityTechdocsContent>
     <TechDocsAddons>
@@ -83,6 +90,30 @@ const cicdContent = (
         title="No CI/CD available for this entity"
         missing="info"
         description="You need to add an annotation to your component if you want to enable CI/CD for it. You can read more about annotations in Backstage by clicking the button below."
+        action={
+          <Button
+            variant="contained"
+            color="primary"
+            href="https://backstage.io/docs/features/software-catalog/well-known-annotations"
+          >
+            Read more
+          </Button>
+        }
+      />
+    </EntitySwitch.Case>
+  </EntitySwitch>
+);
+
+const prContent = (
+  <EntitySwitch>
+    <EntitySwitch.Case if={isGithubPullRequestsAvailable}>
+      <EntityGithubPullRequestsContent />
+    </EntitySwitch.Case>
+    <EntitySwitch.Case>
+      <EmptyState
+        title="No Pull Requests available for this entity"
+        missing="info"
+        description="You need to add an annotation to your component if you want to see Pull Requests."
         action={
           <Button
             variant="contained"
@@ -135,6 +166,10 @@ const overviewContent = (
       <EntityCatalogGraphCard variant="gridItem" height={400} />
     </Grid>
 
+    <Grid item md={6}>
+        <EntityGithubPullRequestsOverviewCard />
+    </Grid>
+
     <Grid item md={4} xs={12}>
       <EntityLinksCard />
     </Grid>
@@ -152,6 +187,10 @@ const serviceEntityPage = (
 
     <EntityLayout.Route path="/ci-cd" title="CI/CD">
       {cicdContent}
+    </EntityLayout.Route>
+
+    <EntityLayout.Route path="/pull-requests" title="Pull Request">
+      {prContent}
     </EntityLayout.Route>
 
     <EntityLayout.Route
@@ -198,6 +237,10 @@ const websiteEntityPage = (
 
     <EntityLayout.Route path="/ci-cd" title="CI/CD">
       {cicdContent}
+    </EntityLayout.Route>
+
+    <EntityLayout.Route path="/pull" title="Pull Requests">
+      {prContent}
     </EntityLayout.Route>
 
     <EntityLayout.Route
