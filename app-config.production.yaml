@@ -28,6 +28,20 @@ backend:
       - host: raw.githubusercontent.com
       - host: github.com
 
+kubernetes:
+  frontend:
+    podDelete:
+      enabled: true
+  serviceLocatorMethod:
+    type: 'multiTenant'
+  clusterLocatorMethods:
+    - type: 'config'
+      clusters:
+        - url: http://kubernetes.default.svc
+          name: backstage
+          authProvider: serviceAccount
+          skipTLSVerify: true
+
 integrations:
   github:
     - host: github.com
