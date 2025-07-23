@@ -1,0 +1,9 @@
+
+resources:
+  - namespace.yaml
+  - secret.yaml
+  - deployment.yaml
+  - service.yaml
+  - sa.yaml 
+  - sa-k8s-rbac.yaml
+  

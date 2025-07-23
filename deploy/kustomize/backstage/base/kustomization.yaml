@@ -1,0 +1,7 @@
+
+resources:
+  - configmap.yaml
+  - sa.yaml
+  - sa-k8s-rbac.yaml
+  - deployment.yaml
+  - service.yaml

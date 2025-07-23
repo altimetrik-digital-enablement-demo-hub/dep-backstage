@@ -1,0 +1,50 @@
+# kubernetes/backstage.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backstage
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backstage
+  template:
+    metadata:
+      labels:
+        app: backstage
+    spec:
+      restartPolicy: Always
+      serviceAccountName: backstage
+      containers:
+        - name: backstage
+          image: ghcr.io/dgeorgievski/dep-backstage:0.0.14
+          imagePullPolicy: IfNotPresent
+          
+          resources:
+            limits:
+              memory: "2048Mi"
+              cpu: "2048m"
+            requests:
+              memory: "512Mi"
+              cpu: "1024m"
+          ports:
+            - name: http
+              containerPort: 7007
+          envFrom:
+            - configMapRef:
+                name: backstage-config
+            - secretRef:
+                name: backstage-secrets
+            - secretRef:
+                name: postgres-secrets
+            
+# Uncomment if health checks are enabled in your app:
+# https://backstage.io/docs/plugins/observability#health-checks
+#          readinessProbe:
+#            httpGet:
+#              port: 7007
+#              path: /healthcheck
+#          livenessProbe:
+#            httpGet:
+#              port: 7007
+#              path: /healthcheck

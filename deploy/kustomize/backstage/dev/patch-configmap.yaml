@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: backstage-config
+data:
+  NODE_ENV: dev-kind # required to load app-conf0g.dev-kind.yaml
+  APP_CONFIG_auth_environment: dev-kind # requied to use Guest auth provider

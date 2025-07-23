@@ -1,0 +1,95 @@
+app:
+  title: DEP Internal Developer Portal
+  baseUrl: ${DEP_IDP_BASE_URL}
+
+organization:
+  name: ${DEP_ORG}
+
+backend:
+  baseUrl: ${DEP_IDP_BASE_URL}
+  listen: ':7007'
+  csp:
+    connect-src: ["'self'", 'http:', 'https:']
+  cors:
+    origin: ${DEP_IDP_BASE_URL}
+    methods: [GET, HEAD, PATCH, POST, PUT, DELETE]
+    credentials: true
+  database:
+    client: pg
+    connection:
+      host: ${BACKSTAGEDB_HOST}
+      port: ${BACKSTAGEDB_PORT}
+      user: ${POSTGRES_USER}
+      password: ${POSTGRES_PASSWORD}
+
+kubernetes:
+  frontend:
+    podDelete:
+      enabled: true
+  serviceLocatorMethod:
+    type: 'multiTenant' # Or 'singleTenant' if you have a single cluster
+  clusterLocatorMethods:
+    - type: 'config'
+      clusters:
+        - url: http://kubernetes.default.svc
+          name: backstage
+          authProvider: serviceAccount
+          skipTLSVerify: true
+          dashboardApp: headlamp
+          dashboardUrl: https://headlamp.localtest.me:8443
+      
+auth:
+  environment: development
+  providers:
+    guest:
+      dangerouslyAllowOutsideDevelopment: false
+    github:
+      development :
+        clientId: ${AUTH_GITHUB_CLIENT_ID}
+        clientSecret: ${AUTH_GITHUB_CLIENT_SECRET}
+
+catalog:
+  orphanStrategy: delete
+
+  # Automatic refresh configuration
+  refresh:
+    schedule:
+      frequency: PT30M # Check every 30 minutes
+      timeout: PT10M
+
+  providers:
+    # GitHub organization discovery - this will automatically scan repositories for entities
+    github:
+      altimetrik:
+        organization: altimetrik-digital-enablement-demo-hub
+        schedule:
+          frequency: PT5M # Scan every 5 minutes
+          timeout: PT10M
+        filters:
+          # Scan all repositories
+          repository: '.*'
+          branch: 'main'
+        catalogPath: '/catalog-info.yaml'
+
+  # Static file locations
+  locations:
+    # Core catalog file
+    - type: file
+      target: ./catalog-info.yaml
+      
+permission:
+  # setting this to `false` will disable permissions
+  enabled: true
+  rbac:
+    # Define authorized users/groups for RBAC administration (can access RBAC backend)
+    admin:
+      users:
+        - name: user:default/guest # Replace with your admin user entity reference
+      groups:
+        - name: group:default/guests # Replace with your admin group entity reference
+
+    # Specify plugins whose permissions should be managed by RBAC
+    pluginsWithPermission:
+      - catalog
+      - scaffolder
+      - permission # The RBAC plugin itself also has permissions

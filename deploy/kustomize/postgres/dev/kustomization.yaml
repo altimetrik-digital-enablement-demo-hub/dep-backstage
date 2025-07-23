@@ -1,0 +1,4 @@
+namespace: dev-backstage
+resources:
+  - namespace.yaml
+  - ../base      

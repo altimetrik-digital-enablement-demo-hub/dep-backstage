@@ -62,7 +62,8 @@ COPY --chown=node:node examples ./examples
 
 # Then copy the rest of the backend bundle, along with any other files we might want.
 COPY --chown=node:node packages/backend/dist/bundle.tar.gz app-config*.yaml ./
+COPY --chown=node:node entrypoint.sh ./
 RUN tar xzf bundle.tar.gz && rm bundle.tar.gz
 COPY --chown=node:node catalog-info.yaml ./
 
-CMD ["node", "packages/backend", "--config", "app-config.production.yaml"] 
+CMD ["/app/entrypoint.sh"]

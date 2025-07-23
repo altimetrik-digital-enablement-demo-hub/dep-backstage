@@ -1,0 +1,6 @@
+
+namespace: headlamp
+resources:
+  - ../base 
+  - ingress.yaml
+  
