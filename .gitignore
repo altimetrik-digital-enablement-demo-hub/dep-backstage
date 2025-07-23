@@ -41,7 +41,7 @@ dist-types
 site
 
 # Local configuration files
-*.local.yml
+*.local.yaml
 
 # Sensitive credentials
 *-credentials.yaml

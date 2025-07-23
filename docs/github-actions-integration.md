@@ -1,6 +1,6 @@
 # Backstage GitHub Actions Integration
 
-This intergation enables Backstage to ingest and display GitHub Workflows runs for a given repository. 
+This intergation enables Backstage to ingest and display GitHub Workflows runs for a given repository.
 
 The plugin that performs the ingestion is installed in Backstage frontend, which requires additional setup to install and configure it.
 

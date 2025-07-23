@@ -10,7 +10,7 @@ Backstage is a React app. Consult the Getting Started page to ensure all the req
 
 [Backstage Getting Started](https://backstage.io/docs/getting-started/)
 
-Start Backstage. If the start-up were successful backstage UI is available at http://localhost:3000
+Start Backstage. If the start-up were successful backstage UI is available at [http://localhost:3000](http://localhost:3000)
 
 ```sh
 > yarn start
@@ -31,8 +31,7 @@ If Kubernetes integration is desired, you can get the value for serviceAccountTo
 > kubectl get -n dev-backstage secret/backstage-sa-token -o jsonpath='{.data.token }' | base64 -d
 ```
 
-`app-config.local.yml` does not exist by default. It is in the `.gitignore` rules and for this reason it needs to be created with the following 
-content:
+`app-config.local.yaml` does not exist by default. It is in the `.gitignore` rules and for this reason it needs to be created with the following content:
 
 ```yaml
 # file ./app-config.local.yml

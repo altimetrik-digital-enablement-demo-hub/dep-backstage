@@ -8,7 +8,7 @@ This document addresses the use case when Backstage integrates in the same k8s c
 
 ### Backstage runs in the k8s cluster
 
-This is the most frequent use case where Backstage integrates with the k8s cluster in which it is deployed. 
+This is the most frequent use case where Backstage integrates with the k8s cluster in which it is deployed.
 ![Backstage-in-k8s](./images/backstage-in-k8s.png)
 
 #### Authentication

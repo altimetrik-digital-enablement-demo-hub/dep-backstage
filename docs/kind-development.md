@@ -1,6 +1,6 @@
 # Kind K8S Development
 
-Backstage instance runs inside Kind Kubernetes cluster. This environment is a great option for fast development and testing of features that require Kubernetes platform. 
+Backstage instance runs inside Kind Kubernetes cluster. This environment is a great option for fast development and testing of features that require Kubernetes platform.
 
 If a new feature works well in the Kind Dev environment, most likely it will work well in the target Prod environment in AWS EKS.
 
