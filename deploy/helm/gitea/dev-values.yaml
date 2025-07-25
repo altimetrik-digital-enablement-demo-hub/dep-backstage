@@ -1,0 +1,32 @@
+valkey-cluster:
+  enabled: false
+valkey:
+  enabled: false
+postgresql:
+  enabled: false
+postgresql-ha:
+  enabled: false
+
+persistence:
+  enabled: false
+
+gitea:
+  config:
+    database:
+      DB_TYPE: sqlite3
+    session:
+      PROVIDER: memory
+    cache:
+      ADAPTER: memory
+    queue:
+      TYPE: level
+
+ingress:
+  enabled: true
+  className: nginx
+  pathType: Prefix
+  annotations: {}
+  hosts:
+    - host: gitea.localtest.me
+      paths:
+        - path: /

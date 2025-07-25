@@ -28,6 +28,20 @@ backend:
       - host: raw.githubusercontent.com
       - host: github.com
 
+kubernetes:
+  frontend:
+    podDelete:
+      enabled: true
+  serviceLocatorMethod:
+    type: 'multiTenant'
+  clusterLocatorMethods:
+    - type: 'config'
+      clusters:
+        - url: http://kubernetes.default.svc
+          name: backstage
+          authProvider: serviceAccount
+          skipTLSVerify: true
+
 integrations:
   github:
     - host: github.com
@@ -37,7 +51,7 @@ integrations:
           clientSecret: ${GITHUB_APP_CLIENT_SECRET}
           privateKey: ${GITHUB_APP_PRIVATE_KEY}
 
-proxy:
+proxy: {}
 
 techdocs:
   builder: 'local' # Alternatives - 'external'
@@ -65,7 +79,7 @@ auth:
         clientId: ${GITHUB_OAUTH_CLIENT_ID}
         clientSecret: ${GITHUB_OAUTH_CLIENT_SECRET}       
 
-scaffolder:
+scaffolder: {}
 
 catalog:
   orphanStrategy: delete
@@ -123,7 +137,7 @@ catalog:
   
   useUrlReadersSearch: true
 
-kubernetes:
+kubernetes: {}
 
 permission:
   enabled: true

@@ -1,0 +1,15 @@
+site_name: DEP Backstage
+# used for including docs as snippets outside of the mkdocs root
+markdown_extensions:
+  - pymdownx.snippets:
+      check_paths: true
+      base_path: ["."]  # Sets the project root as the base for snippets
+nav:
+  - Home: index.md
+  - Dev Environments:
+    - Local: local-development.md
+    - Kind K8S: kind-development.md
+  - Integrations:
+    - GitHub Actions: github-actions-integration.md
+    - Kubernetes: k8s-intergration.md
+  - About: about.md

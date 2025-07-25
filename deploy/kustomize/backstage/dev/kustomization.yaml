@@ -1,0 +1,17 @@
+namespace: dev-backstage
+resources:
+  - secret.yaml
+  - ingress.yaml
+  - ../base
+
+patches:
+- path: patch-configmap.yaml
+
+# Crete .env.secrets file with the following content:
+# GITHUB_TOKEN: ...
+#
+# This is gitignore-d file.
+secretGenerator:
+  - name: backstage-secrets
+    envs:
+      - .env.secrets
